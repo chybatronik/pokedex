@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
-import { showWainting, showOnlyLoaded, showAll, SHOW_WAITING, SHOW_ONLY_LOADED } from '../../store/actions/filter'
+import {
+  showWainting,
+  showOnlyLoaded,
+  showAll,
+  SHOW_WAITING,
+  SHOW_ONLY_LOADED
+} from '../../store/actions/filter'
+import { countWaiting } from '../../store/selectors/pokemons'
+import PropTypes from 'prop-types'
 
-class Panel extends Component {
+export class Panel extends Component {
   showWainting () {
     this.props.dispatch(showWainting())
   }
@@ -17,8 +25,8 @@ class Panel extends Component {
   }
 
   render () {
-    const { count, offset, filterActive } = this.props.pokemons.config
-    const waiting = this.props.pokemons.waiting
+    const { count, offset, filterActive } = this.props.config
+    const waiting = this.props.waiting
     const isShowWaiting = filterActive === SHOW_WAITING
     const isShowOnlyLoaded = filterActive === SHOW_ONLY_LOADED
     const isShowAll = filterActive === null
@@ -27,13 +35,25 @@ class Panel extends Component {
         <NavbarBrand href='/'>pokemons : { count }</NavbarBrand>
         <Nav className='ml-auto' navbar>
           <NavItem>
-            <NavLink href='#' disabled={isShowAll}  onClick={this.showAll.bind(this)}>all: {offset}</NavLink>
+            <NavLink
+              href='#'
+              disabled={isShowAll}
+              onClick={this.showAll.bind(this)}>all: {offset}
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href='#' disabled={isShowOnlyLoaded} onClick={this.showOnlyLoaded.bind(this)}>loaded: {offset - waiting}</NavLink>
+            <NavLink
+              href='#'
+              disabled={isShowOnlyLoaded}
+              onClick={this.showOnlyLoaded.bind(this)}>loaded: {offset - waiting}
+            </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href='#' disabled={isShowWaiting} onClick={this.showWainting.bind(this)}>waiting : {waiting}</NavLink>
+            <NavLink
+              href='#'
+              disabled={isShowWaiting}
+              onClick={this.showWainting.bind(this)}>waiting : {waiting}
+            </NavLink>
           </NavItem>
         </Nav>
       </Navbar>
@@ -41,13 +61,16 @@ class Panel extends Component {
   }
 }
 
+Panel.propTypes = {
+  config: PropTypes.object.isRequired,
+  waiting: PropTypes.number.isRequired
+}
+
 const mapStateToProps = state => {
   const { pokemons } = state
   return {
-    pokemons: {
-      config: pokemons.config,
-      waiting: Object.keys(state.fullPokemons).filter((item) => {return state.fullPokemons[item].isFetch}).length
-    }
+    config: pokemons.config,
+    waiting: countWaiting(state)
   }
 }
 export default connect(mapStateToProps)(Panel)

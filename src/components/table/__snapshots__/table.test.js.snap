@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`table component renders Table 1`] = `
+<InfiniteScroll
+  element="article"
+  hasMore={true}
+  initialLoad={true}
+  isReverse={false}
+  loadMore={[MockFunction]}
+  loader={
+    <Row
+      className="d-flex justify-content-center"
+      tag="div"
+    >
+      <Spinner
+        color="fuchsia"
+        fadeIn="full"
+        name="ball-scale-ripple"
+        noFadeIn={false}
+        overrideSpinnerClassName=""
+      />
+    </Row>
+  }
+  pageStart={0}
+  ref={null}
+  threshold={250}
+  useCapture={false}
+  useWindow={true}
+>
+  <Table
+    responsiveTag="div"
+    striped={true}
+    tag="table"
+  >
+    <thead>
+      <tr>
+        <th>
+          #
+        </th>
+        <th>
+          @
+        </th>
+        <th>
+          name
+        </th>
+        <th>
+          types
+        </th>
+        <th>
+          weight
+        </th>
+        <th>
+          height
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <RowComponent
+        height={2}
+        index={1}
+        isFetch={false}
+        key="row_1"
+        name="1"
+        sprites={Object {}}
+        weight={1}
+      />
+      <RowComponent
+        height={42}
+        index={2}
+        isFetch={false}
+        key="row_2"
+        name="2"
+        sprites={Object {}}
+        weight={21}
+      />
+    </tbody>
+  </Table>
+</InfiniteScroll>
+`;
+
+exports[`table component renders Table with error 1`] = `
+<Alert
+  closeAriaLabel="Close"
+  color="danger"
+  isOpen={true}
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+  tag="div"
+  transition={
+    Object {
+      "appear": true,
+      "baseClass": "fade",
+      "baseClassActive": "show",
+      "enter": true,
+      "exit": true,
+      "in": true,
+      "mountOnEnter": false,
+      "onEnter": [Function],
+      "onEntered": [Function],
+      "onEntering": [Function],
+      "onExit": [Function],
+      "onExited": [Function],
+      "onExiting": [Function],
+      "tag": "div",
+      "timeout": 150,
+      "unmountOnExit": true,
+    }
+  }
+>
+  Ошибка подключения к серверу pokeapi.co
+</Alert>
+`;

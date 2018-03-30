@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders without crashing 1`] = `
+<Container
+  tag="div"
+>
+  <Connect(Panel) />
+  <Row
+    style={
+      Object {
+        "marginTop": 0,
+      }
+    }
+    tag="div"
+  >
+    <Connect(TableContainer) />
+  </Row>
+</Container>
+`;

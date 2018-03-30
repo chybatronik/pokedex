@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Row component with isFetch: false 1`] = `
+<tr
+  key="test"
+>
+  <th
+    scope="row"
+    width="10%"
+  >
+     
+    100
+     
+  </th>
+  <td
+    style={
+      Object {
+        "padding": 0,
+      }
+    }
+    width="10%"
+  >
+    <img
+      alt="test"
+      async={true}
+      height={52}
+    />
+  </td>
+  <td>
+    test
+  </td>
+  <td />
+  <td
+    width="10%"
+  >
+    1
+  </td>
+  <td
+    width="10%"
+  >
+    2
+  </td>
+</tr>
+`;
+
+exports[`Row component with isFetch: true 1`] = `
+<tr
+  key="test"
+>
+  <th
+    scope="row"
+    width="10%"
+  >
+     
+    100
+     
+  </th>
+  <td
+    width="10%"
+  >
+    <Spinner
+      color="blue"
+      fadeIn="full"
+      name="circle"
+      noFadeIn={false}
+      overrideSpinnerClassName=""
+    />
+  </td>
+  <td>
+    test
+  </td>
+  <td />
+  <td
+    width="10%"
+  />
+  <td
+    width="10%"
+  />
+</tr>
+`;

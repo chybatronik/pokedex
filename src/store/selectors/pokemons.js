@@ -20,3 +20,12 @@ export const selectIndexPokemons = createSelector(
     return Object.keys(index).map((item) => { return {...fullPokemons[item]} })
   }
 )
+
+const getFullPokemons = (state) => state.fullPokemons
+
+export const countWaiting = createSelector(
+  [getFullPokemons],
+  (fullPokemons) => {
+    return Object.keys(fullPokemons).filter((item) => { return fullPokemons[item].isFetch }).length
+  }
+)

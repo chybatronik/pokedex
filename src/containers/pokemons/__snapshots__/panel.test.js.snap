@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders panel 1`] = `
+<Navbar
+  color="faded"
+  expand="md"
+  fixed="top"
+  sticky="top"
+  tag="nav"
+>
+  <NavbarBrand
+    href="/"
+    tag="a"
+  >
+    pokemons : 
+    11
+  </NavbarBrand>
+  <Nav
+    className="ml-auto"
+    navbar={true}
+    tag="ul"
+    vertical={false}
+  >
+    <NavItem
+      tag="li"
+    >
+      <NavLink
+        disabled={false}
+        href="#"
+        onClick={[Function]}
+        tag="a"
+      >
+        all: 
+        77
+      </NavLink>
+    </NavItem>
+    <NavItem
+      tag="li"
+    >
+      <NavLink
+        disabled={false}
+        href="#"
+        onClick={[Function]}
+        tag="a"
+      >
+        loaded: 
+        65
+      </NavLink>
+    </NavItem>
+    <NavItem
+      tag="li"
+    >
+      <NavLink
+        disabled={false}
+        href="#"
+        onClick={[Function]}
+        tag="a"
+      >
+        waiting : 
+        12
+      </NavLink>
+    </NavItem>
+  </Nav>
+</Navbar>
+`;

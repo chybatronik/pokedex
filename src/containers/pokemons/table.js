@@ -5,7 +5,11 @@ import { getPokemons } from '../../store/actions/pokemons'
 import { selectIndexPokemons } from '../../store/selectors/pokemons'
 
 class TableContainer extends Component {
-  loadFunc = () => {
+  constructor (props) {
+    super(props)
+    this.loadFunc = this.loadFunc.bind(this)
+  }
+  loadFunc () {
     const { pokemons, dispatch } = this.props
     if (!pokemons.config.isFetch && !pokemons.config.isError) {
       console.log('MORE', pokemons.config)
@@ -15,7 +19,6 @@ class TableContainer extends Component {
       ))
     }
   }
-
   render () {
     const { index, config } = this.props.pokemons
     return (
