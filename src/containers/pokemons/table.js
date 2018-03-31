@@ -34,14 +34,12 @@ class TableContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  // const { pokemons } = state
   return {
     pokemons: {
       index: selectIndexPokemons(state),
       config: state.pokemons.config
     },
     fullPokemons: state.fullPokemons
-    // getPokemons
   }
 }
 export default connect(mapStateToProps)(TableContainer)

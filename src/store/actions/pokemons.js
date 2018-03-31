@@ -1,3 +1,4 @@
+// @flow
 import rp from 'request-promise-native'
 import { getFullPokemon } from './fullPokemon'
 
@@ -7,23 +8,23 @@ export const REQUEST_POKEMONS = 'REQUEST_POKEMONS'
 export const RECEIVE_POKEMONS = 'RECEIVE_POKEMONS'
 export const ERROR_POKEMONS = 'ERROR_POKEMONS'
 
-export const requestPokemons = limit => ({
+export const requestPokemons = (limit: number) => ({
   type: REQUEST_POKEMONS,
   limit: limit
 })
 
-export const receivePokemons = (count, pokemons) => ({
+export const receivePokemons = (count: number, pokemons: Array<Object>) => ({
   type: RECEIVE_POKEMONS,
   count,
   pokemons
 })
 
-export const errorPokemons = (error) => ({
+export const errorPokemons = (error: any) => ({
   type: ERROR_POKEMONS,
   error
 })
 
-export const getPokemons = (offset = 20, limit = 20) => dispatch => {
+export const getPokemons = (offset: number = 20, limit: number = 20) => (dispatch: Function) => {
   dispatch(requestPokemons(limit))
   const option = {
     uri: URL + `/?limit=${limit}&offset=${offset}`,
@@ -34,7 +35,6 @@ export const getPokemons = (offset = 20, limit = 20) => dispatch => {
   rp(option)
     .then(function (data) {
       dispatch(receivePokemons(data.count, data.results))
-      console.log('data.results::', data.results)
       data.results.forEach((item) => {
         dispatch(getFullPokemon(item.name, item.url))
       })

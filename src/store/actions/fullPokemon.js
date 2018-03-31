@@ -1,3 +1,4 @@
+// @flow
 import rp from 'request-promise-native'
 
 export const REQUEST_FULL_POKEMON = 'REQUEST_FULL_POKEMON'
