@@ -4,7 +4,7 @@ import 'cross-fetch/polyfill'
 import { getFullPokemon } from './fullPokemon'
 import type { ThunkAction, Action } from './types'
 
-const URL = 'http://pokeapi.co/api/v2/pokemon'
+const URL = 'https://pokeapi.co/api/v2/pokemon'
 
 export const REQUEST_POKEMONS = 'REQUEST_POKEMONS'
 export const RECEIVE_POKEMONS = 'RECEIVE_POKEMONS'
