@@ -29,19 +29,17 @@ export const errorFullPokemon = ( name: string , error: string): Action => ({
   }
 })
 
-export const getFullPokemon = ( name: string, url: string ): ThunkAction => (dispatch: Function) => {
+export const getFullPokemon = ( name: string, url: string ): ThunkAction => async (dispatch: Function) => {
   dispatch(requestFullPokemon(name))
-  return fetch(url)
-    .then(res => {
-       if (res.status >= 400) {
-         throw new Error("Bad response from server");
-       }
-       return res.json();
-     })
-    .then(data => {
-      dispatch(receiveFullPokemon(data))
-    })
-    .catch(err => {
-      dispatch(errorFullPokemon(name, err.message))
-    })
+  try{
+    const response = await fetch(url)
+    if (response.status >= 400) {
+      throw new Error("Bad response from server");
+    }
+    const data = await response.json()
+    dispatch(receiveFullPokemon(data))
+  }
+  catch(err){
+    dispatch(errorFullPokemon(name, err.message))
+  }
 }

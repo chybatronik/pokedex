@@ -32,25 +32,22 @@ export const errorPokemons = (error: string): Action => ({
   }
 })
 
-export const getPokemons = (offset: number = 20, limit: number = 20): ThunkAction  => (dispatch: Function) => {
+export const getPokemons = (offset: number = 20, limit: number = 20): ThunkAction  => async (dispatch: Function) => {
   dispatch(requestPokemons(limit))
 
   const uri = URL + `/?limit=${limit}&offset=${offset}`
-
-  return fetch(uri)
-    .then(res => {
-       if (res.status >= 400) {
-         throw new Error("Bad response from server");
-       }
-       return res.json();
-     })
-    .then((data) => {
-      dispatch(receivePokemons(data.count, data.results))
-      data.results.forEach((item) => {
-        dispatch(getFullPokemon(item.name, item.url))
-      })
+  try{
+    const response = await fetch(uri)
+    if (response.status >= 400) {
+      throw new Error("Bad response from server")
+    }
+    const data = await response.json()
+    dispatch(receivePokemons(data.count, data.results))
+    data.results.forEach((item) => {
+      dispatch(getFullPokemon(item.name, item.url))
     })
-    .catch((err) => {
-      dispatch(errorPokemons(err.message))
-    })
+  }
+  catch(err){
+    dispatch(errorPokemons(err.message))
+  }
 }
