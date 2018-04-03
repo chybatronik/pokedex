@@ -1,37 +1,47 @@
 // @flow
-import rp from 'request-promise-native'
+// import rp from 'request-promise-native'
+import 'cross-fetch/polyfill'
+import type { ThunkAction, Action } from './types'
 
 export const REQUEST_FULL_POKEMON = 'REQUEST_FULL_POKEMON'
 export const RECEIVE_FULL_POKEMON = 'RECEIVE_FULL_POKEMON'
 export const ERROR_FULL_POKEMON = 'ERROR_FULL_POKEMON'
 
-export const requestFullPokemon = name => ({
+export const requestFullPokemon = ( name: string ): Action => ({
   type: REQUEST_FULL_POKEMON,
-  name
-})
-
-export const receiveFullPokemon = (pokemon) => ({
-  type: RECEIVE_FULL_POKEMON,
-  pokemon
-})
-
-export const errorFullPokemon = (error) => ({
-  type: ERROR_FULL_POKEMON,
-  error
-})
-
-export const getFullPokemon = (name, url) => dispatch => {
-  dispatch(requestFullPokemon(name))
-  const option = {
-    uri: url,
-    json: true,
-    timeout: 20000
+  payload: {
+    name
   }
-  rp(option)
-    .then(function (data) {
+})
+
+export const receiveFullPokemon = ( pokemon: Object ): Action => ({
+  type: RECEIVE_FULL_POKEMON,
+  payload: {
+    pokemon
+  }
+})
+
+export const errorFullPokemon = ( name: string , error: string): Action => ({
+  type: ERROR_FULL_POKEMON,
+  payload: {
+    name,
+    error
+  }
+})
+
+export const getFullPokemon = ( name: string, url: string ): ThunkAction => (dispatch: Function) => {
+  dispatch(requestFullPokemon(name))
+  return fetch(url)
+    .then(res => {
+       if (res.status >= 400) {
+         throw new Error("Bad response from server");
+       }
+       return res.json();
+     })
+    .then(data => {
       dispatch(receiveFullPokemon(data))
     })
-    .catch(function (err) {
-      dispatch(errorFullPokemon(err))
+    .catch(err => {
+      dispatch(errorFullPokemon(name, err.message))
     })
 }

@@ -1,13 +1,24 @@
+// @flow
 import {
   REQUEST_POKEMONS, RECEIVE_POKEMONS,
   ERROR_POKEMONS
 } from '../actions/pokemons'
 
-import {
-  SHOW_WAITING, SHOW_ONLY_LOADED, SHOW_ALL
-} from '../actions/filter'
+import type { Action } from '../actions/types'
 
-const defaultState = {
+type State = {
+  +index: Object,
+  +config: {
+    +offset: number,
+    +limit: number,
+    +count: number,
+    +isFetch: boolean,
+    +isError: boolean,
+    +hasMore: boolean
+  }
+}
+
+export const defaultState: State = {
   index: {},
   config: {
     offset: 0,
@@ -15,37 +26,12 @@ const defaultState = {
     count: 0,
     isFetch: false,
     isError: false,
-    hasMore: true,
-    filterActive: null
+    hasMore: true
   }
 }
 
-const pokemons = (state = defaultState, action) => {
+const pokemons = (state: State = defaultState, action: Action): State => {
   switch (action.type) {
-    case SHOW_ALL:
-      return {
-        index: state.index,
-        config: {
-          ...state.config,
-          filterActive: null
-        }
-      }
-    case SHOW_ONLY_LOADED:
-      return {
-        index: state.index,
-        config: {
-          ...state.config,
-          filterActive: SHOW_ONLY_LOADED
-        }
-      }
-    case SHOW_WAITING:
-      return {
-        index: state.index,
-        config: {
-          ...state.config,
-          filterActive: SHOW_WAITING
-        }
-      }
     case REQUEST_POKEMONS:
       return {
         index: state.index,
@@ -56,7 +42,7 @@ const pokemons = (state = defaultState, action) => {
       }
     case RECEIVE_POKEMONS:
       let pokemons = {}
-      action.pokemons.forEach((item) => {
+      action.payload.pokemons.forEach((item) => {
         pokemons[item.name] = {...item}
       })
       return {
@@ -68,8 +54,8 @@ const pokemons = (state = defaultState, action) => {
         config: {
           ...state.config,
           isFetch: false,
-          count: action.count,
-          offset: state.config.offset + action.pokemons.length
+          count: action.payload.count,
+          offset: state.config.offset + action.payload.pokemons.length
         }
       }
     case ERROR_POKEMONS:
@@ -79,7 +65,7 @@ const pokemons = (state = defaultState, action) => {
           ...state.config,
           isFetch: false,
           isError: true,
-          error: action.error
+          error: action.payload.error
         }
       }
     default:

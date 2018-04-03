@@ -1,28 +1,32 @@
+// @flow
 import React, { PureComponent } from 'react'
 import { Table, Row, Alert } from 'reactstrap'
 import InfiniteScroll from 'react-infinite-scroller'
 import Spinner from 'react-spinkit'
-import PropTypes from 'prop-types'
 import TableRow from './row'
 
-export default class TableComponent extends PureComponent {
-  renderRow (item) {
+type Props = {
+  isError: bool,
+  loadFunc: Function,
+  hasMore: bool,
+  array: Array<Object>
+}
+export default class TableComponent extends PureComponent<Props> {
+  renderRow (item: Object) {
     return (
       <TableRow {...item} key={'row_' + item.name} />
     )
   }
 
-  renderRows (array) {
-    if (array && array.length) {
-      return array.map((item, index) => {
-        item.index = index + 1
-        if (item.name) {
-          return this.renderRow(item)
-        }
-      })
-    } else {
-      return []
-    }
+  renderRows (array: Array<Object>) {
+    // if (array && array.length) {
+    return array.map((item, index) => {
+      item.index = index + 1
+      return this.renderRow(item)
+      // if (item.name) {
+      // }
+    })
+    // }
   }
 
   renderError () {
@@ -72,11 +76,4 @@ export default class TableComponent extends PureComponent {
       </InfiniteScroll>
     )
   }
-}
-
-TableComponent.propTypes = {
-  isError: PropTypes.bool,
-  loadFunc: PropTypes.func.isRequired,
-  hasMore: PropTypes.bool.isRequired,
-  array: PropTypes.array.isRequired
 }

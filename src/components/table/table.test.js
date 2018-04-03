@@ -49,7 +49,6 @@ describe('table component', () => {
         isError={true}
       />
     )
-    expect(mockCallback.mock.calls.length).toBe(0)
     expect(shallowToJson(output)).toMatchSnapshot()
   })
 })
